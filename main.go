@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -21,15 +22,27 @@ func main() {
 	}
 	
 	problems := parseLines(lines)
-	fmt.Println(problems)
+
+	correct := 0
+	for i, p := range problems {
+		fmt.Printf("Problem #%d: %s = \n", i+1, p.q)
+		var answer string
+		fmt.Scanf("%s\n", &answer)
+		if answer == p.a {
+			correct++
+		}
+	}  
+	
+	fmt.Printf("You scored %d out of %d.\n", correct, len(problems))
 }
+
 
 func parseLines(lines [][]string) []Problem {
 	ret := make([]Problem, len(lines))
 	for i, line := range lines {
 		ret[i] = Problem{
 			q: line[0],
-			a: line[1],
+			a: strings.TrimSpace(line[1]),
 		}
 	}
 	return ret
